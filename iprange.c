@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "iprange.h"
 
 unsigned int ip2int (char *ipstr){
   unsigned char o0, o1, o2, o3;
   unsigned int ipint;
-  sscanf(ipstr, "%hd.%hd.%hd.%hd", &o3, &o2, &o1, &o0);
+  if (4 != sscanf(ipstr, "%hd.%hd.%hd.%hd", &o3, &o2, &o1, &o0)){
+    fprintf(stderr, "Error parsing IP address: %s\nExiting.\n", ipstr);
+    exit(1);
+  }
   ipint = (o0) | (o1 << 8) | (o2 << 16) | (o3 << 24);
   return ipint;
 }
@@ -20,7 +24,6 @@ void int2ip (unsigned int ipint, char *ipstr) {
   }
   snprintf(ipstr, 18, "%u.%u.%u.%u", o[3], o[2], o[1], o[0]);
 }
-  
 
 void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
   unsigned char mask, offset;
@@ -28,10 +31,13 @@ void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
   char ipstr[18];
   memset(ipstr, 0, 18);
 
-  while (cidr[++sep] != '/')
+  while (cidr[sep++] != '/' && sep < 18)
     ;
-
-  sscanf(cidr+sep, "/%d", &mask);
+  if (sep == 18 || sep < 7) {
+    fprintf(stderr, "Error parsing CIDR: %s\nExiting.\n", cidr);
+    exit(1);
+  }
+  sscanf(cidr+sep, "%d", &mask);
   sscanf(cidr, "%s", ipstr);
   ipint = ip2int(ipstr);
   offset = 32 - mask;
@@ -68,7 +74,7 @@ int main (int argc, char **argv){
     list_min_max(min, max);
     return 0;
   } else {
-    printf("Usage: %s <min-ip> <max-ip>\n           -- or --\n       %s <cidr>\n", argv[0], argv[0]);
+    fprintf(stderr,"Usage: %s <min-ip> <max-ip>\n           -- or --\n       %s <cidr>\n", argv[0], argv[0]);
     return (1);
   }
 
