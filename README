@@ -9,6 +9,14 @@ A quick and dirty tool for generating a newline-separated list
 of IP addresses given either a minimum and maximum address or a
 CIDR string. I couldn't find a tool that did exactly this, and
 I found myself needing something that did do exactly this a few
-different times, while writing various bash scripts. So, here it
+different times, while writing various bash scripts.* So, here it
 is. I hope it comes in handy. 
+
+* The idea is that it should be handy for doing things like this,
+  in bash, or the scripting lang of your choice:
+
+  for ip in `iprange 192.168.2.0/16`; do
+    something_or_other $ip
+  done
+
 
