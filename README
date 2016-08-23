@@ -1,0 +1,14 @@
+ _                                  
+(_)_ __  _ __ __ _ _ __   __ _  ___ 
+| | '_ \| '__/ _` | '_ \ / _` |/ _ \
+| | |_) | | | (_| | | | | (_| |  __/
+|_| .__/|_|  \__,_|_| |_|\__, |\___|
+  |_|                    |___/      
+
+A quick and dirty tool for generating a newline-separated list
+of IP addresses given either a minimum and maximum address or a
+CIDR string. I couldn't find a tool that did exactly this, and
+I found myself needing something that did do exactly this a few
+different times, while writing various bash scripts. So, here it
+is. I hope it comes in handy. 
+
