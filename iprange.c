@@ -23,6 +23,7 @@ void int2ip (unsigned int ipint, char *ipstr) {
       ipint >>= 8;
   }
   snprintf(ipstr, 18, "%u.%u.%u.%u", o[3], o[2], o[1], o[0]);
+  return;
 }
 
 void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
@@ -44,7 +45,9 @@ void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
   bitmask = (0xFFFFFFFF >> offset) << offset;
   *min = ipint & bitmask;
   *max = ipint | (~bitmask);
+  return;
 }
+
 
 void cidr_list(char *cidr){
   unsigned int min, max;
