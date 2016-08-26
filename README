@@ -5,7 +5,7 @@
 |_| .__/|_|  \__,_|_| |_|\__, |\___|
   |_|                    |___/      
 
-A quick and dirty tool for generating a newline-separated list
+A quick and dirty tool for generating a newline-separated** list
 of IP addresses given either a minimum and maximum address or a
 CIDR string. I couldn't find a tool that did exactly this, and
 I found myself needing something that did do exactly this a few
@@ -19,4 +19,9 @@ is. I hope it comes in handy.
     something_or_other $ip
   done
 
-
+** I plan to allow for other separators as well, controlled with some
+   cli parameter or other. But for now, piping into tr works fine. 
+   To get a comma-separated list, e.g., just use 
+          iprange 192.168.2.0/16 | tr \\n , | sed s/,$//
+   (and add another backslash to \\n if you're enclosing the command 
+   in backticks)
