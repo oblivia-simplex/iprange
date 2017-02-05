@@ -4,7 +4,7 @@
 #include "iprange.h"
 
 unsigned int ip2int (char *ipstr){
-  unsigned char o0, o1, o2, o3;
+  unsigned short int o0, o1, o2, o3;
   unsigned int ipint;
   if (4 != sscanf(ipstr, "%hd.%hd.%hd.%hd", &o3, &o2, &o1, &o0)){
     fprintf(stderr, "Error parsing IP address: %s\nExiting.\n", ipstr);
@@ -27,7 +27,7 @@ void int2ip (unsigned int ipint, char *ipstr) {
 }
 
 void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
-  unsigned char mask, offset;
+  unsigned short int mask, offset;
   int ipint, bitmask, sep = 0;
   char ipstr[18];
   memset(ipstr, 0, 18);
@@ -38,7 +38,7 @@ void cidr_min_max(char *cidr, unsigned int *min, unsigned int *max){
     fprintf(stderr, "Error parsing CIDR: %s\nExiting.\n", cidr);
     exit(1);
   }
-  sscanf(cidr+sep, "%d", &mask);
+  sscanf(cidr+sep, "%hd", &mask);
   sscanf(cidr, "%s", ipstr);
   ipint = ip2int(ipstr);
   offset = 32 - mask;
