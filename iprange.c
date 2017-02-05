@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "iprange.h"
+#include <time.h>
 
 unsigned int ip2int (char *ipstr){
   unsigned short int o0, o1, o2, o3;
@@ -65,10 +66,20 @@ void list_min_max(unsigned int min, unsigned int max){
   return;
 }
 
+void random_list(){
+  srand(time(NULL));
+  char ipstr[18];
+  while (1) {
+    int2ip(rand(), ipstr);
+    printf("%s\n", ipstr);
+  }
+}
+
 int main (int argc, char **argv){
 
   if (argc == 2){
-    cidr_list (argv[1]);
+    if (!strcmp(argv[1], "random")) random_list ();
+    else cidr_list (argv[1]);
     return 0;
   } else if (argc == 3) {
     unsigned int min, max;
@@ -77,7 +88,8 @@ int main (int argc, char **argv){
     list_min_max(min, max);
     return 0;
   } else {
-    fprintf(stderr,"Usage: %s <min-ip> <max-ip>\n           -- or --\n       %s <cidr>\n", argv[0], argv[0]);
+    fprintf(stderr,"Usage: %s <min-ip> <max-ip>\n           -- or --\n       %s <cidr>\n           -- or --\n       %s random\n", 
+        argv[0],argv[0], argv[0]);
     return (1);
   }
 
